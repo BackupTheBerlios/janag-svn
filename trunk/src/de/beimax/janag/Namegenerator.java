@@ -104,9 +104,9 @@ public class Namegenerator {
 				//ignore empty lines and comments
 				if (!line.startsWith("##") && !line.trim().equals("")) {
 					if (pattern == null && (line.charAt(0) != '['))
-						throw new IOException(Messages.getString("Namegenerator.SemanticsFileSyntaxError") + line); //$NON-NLS-1$
+						throw new IOException(I18N.geti18nString(Messages.getString("Namegenerator.SemanticsFileSyntaxError")) + line); //$NON-NLS-1$
 					else if (pattern != null && group == null && (line.charAt(0) != ':'))
-						throw new IOException(Messages.getString("Namegenerator.NoGenderSelected")); //$NON-NLS-1$
+						throw new IOException(I18N.geti18nString(Messages.getString("Namegenerator.NoGenderSelected"))); //$NON-NLS-1$
 					if (line.charAt(0) == '[') {
 						line = line.substring(1,line.length()-1);
 						pattern = new NamePattern(I18N.geti18nString(line)); //new group
@@ -120,7 +120,7 @@ public class Namegenerator {
 					} else {
 						String[] part = MyUtils.split(line, ":");
 						if (part.length != 3)
-							throw new IOException(Messages.getString("Namegenerator.WrongNameStart") + line + Messages.getString("Namegenerator.WrongNameEnd")); //$NON-NLS-1$ //$NON-NLS-2$
+							throw new IOException(I18N.geti18nString(Messages.getString("Namegenerator.WrongNameStart")) + line + I18N.geti18nString(Messages.getString("Namegenerator.WrongNameEnd"))); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (part[1].equals(""))
 							myweight = 10;
@@ -193,7 +193,7 @@ public class Namegenerator {
 				//ignore empty lines and comments
 				if (!line.startsWith("##") && !line.trim().equals("")) {
 					if (group == null && line.charAt(0) != '[')
-						throw new IOException(Messages.getString("Namegenerator.LanguageFileSyntaxError") + line); //$NON-NLS-1$
+						throw new IOException(I18N.geti18nString(Messages.getString("Namegenerator.LanguageFileSyntaxError")) + line); //$NON-NLS-1$
 					if (line.charAt(0) == '[') {
 						line = line.substring(1,line.length()-1);
 						group = new LangGroup(I18N.geti18nString(line)); //new group
@@ -236,7 +236,7 @@ public class Namegenerator {
 
 		if (count < 1) {
 			String[] back = new String[1];
-			back[0] = Messages.getString("Namegenerator.CountLessThanOne"); //$NON-NLS-1$
+			back[0] = I18N.geti18nString(Messages.getString("Namegenerator.CountLessThanOne")); //$NON-NLS-1$
 			return back;
 		}
 		String[] back = new String[count];
@@ -245,14 +245,14 @@ public class Namegenerator {
 		NamePattern p = (NamePattern) namePatterns.gotoNode(pattern);
 
 		if (p == null) {
-			back[0] = Messages.getString("Namegenerator.NoPatternFound") + pattern; //$NON-NLS-1$
+			back[0] = I18N.geti18nString(Messages.getString("Namegenerator.NoPatternFound")) + pattern; //$NON-NLS-1$
 			return back;
 		}
 
 		NameGenderGroup gg = (NameGenderGroup) p.gotoNode(gender);
 		
 		if (gg == null) {
-			back[0] = Messages.getString("Namegenerator.NoGenderFound") + gender; //$NON-NLS-1$
+			back[0] = I18N.geti18nString(Messages.getString("Namegenerator.NoGenderFound")) + gender; //$NON-NLS-1$
 			return back;
 		}
 
@@ -263,7 +263,7 @@ public class Namegenerator {
 			ne = (NameElement) g.resetCursor();
 			for (int j = 0; j < g.countList(); j++) { //join...
 				lg = (LangGroup) langGroups.gotoNode(ne.getName());
-				if (lg == null) s += Messages.getString("Namegenerator.ErrorGeneric"); //$NON-NLS-1$
+				if (lg == null) s += I18N.geti18nString(Messages.getString("Namegenerator.ErrorGeneric")); //$NON-NLS-1$
 				else {
 					e = (LangElement) lg.getRandom();
 	                temp = e.getName();

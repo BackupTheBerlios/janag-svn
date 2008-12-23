@@ -53,7 +53,7 @@ public class NamegenServerThread extends Thread {
 	 * Constructor
 	 */
 	public NamegenServerThread(Socket cs) {
-		
+		so = cs;
 	}
 	
 	/* (non-Javadoc)
@@ -132,7 +132,7 @@ public class NamegenServerThread extends Thread {
 			count = (int) st.nval;
 		} catch (IOException e) {
 			System.err.println(I18N.geti18nString(Messages.getString("NamegenServerThread.CommandError"))); //$NON-NLS-1$
-			mynames[0] = I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorStart")) + e.getMessage() + Messages.getString("NamegenServerThread.CommandErrorEnd"); //$NON-NLS-1$ //$NON-NLS-2$
+			mynames[0] = I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorStart")) + e.getMessage() + I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorEnd")); //$NON-NLS-1$ //$NON-NLS-2$
 			return mynames;
 		}
 		

@@ -206,7 +206,7 @@ HebraeischW1:10:^HebraeischW
 ##Orkische Sprachschablone
 #############################################################################
 [Orcish|Orkisch]
-:Orc:Ork
+:Orc|Ork
 Ork1:10:^OrkAnfang,Vokal,OrkMittel
 Ork2:10:^Vokal,OrkAnfang,Vokal,OrkMittel
 Ork3:10:^Vokal,OrkAnfang2,OrkAnfang
