@@ -1,4 +1,4 @@
-package de.beimax.utils;
+package de.beimax.janag;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
  * I18N-Message Class
  */
 public class Messages {
-	private static final String BUNDLE_NAME = "de.beimax.utils.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "de.beimax.janag.messages"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
 			.getBundle(BUNDLE_NAME);

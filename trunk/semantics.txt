@@ -1,4 +1,4 @@
-##Language cultures und Semantics
+##Language cultures and Semantics
 ##Sprachkulturen und Wortbildungsregeln
 
 ##A language pattern will be set by [...]
@@ -115,13 +115,13 @@ EinzelnameFantasy:5:^FantasyAnfang,DämonEndungM
 EinzelnameFantasyLang:5:^FantasyAnfang,FantasyMitte,DämonEndungM
 DämonName+FantasyEndung:4:^DämonAnfang,FantasyEndungM
 Anfang+EndeM:10:^DämonAnfang,DämonEndungM
-#GottnameM:10:^DämonGott,space,^DämonAnfang,DämonEndungM
-#GottnameKomplexM:5:^DämonGott,space,-,space,^DämonPrefix,DämonGottsuffixM
+##GottnameM:10:^DämonGott,space,^DämonAnfang,DämonEndungM
+##GottnameKomplexM:5:^DämonGott,space,-,space,^DämonPrefix,DämonGottsuffixM
 
-#:Demoness|Dämonin
+:Demoness|Dämonin
 Anfang+EndeW:10:^DämonAnfang,DämonEndungW
 Maennlich+EndeW:10:^DämonEndungM,DämonEndungW
-#GottnameW:10:^DämonGott,in,space,^DämonAnfang,DämonEndungW
+##GottnameW:10:^DämonGott,in,space,^DämonAnfang,DämonEndungW
 Einzelname+Endung:5:^DämonEinzelnameM,EndungWeiblich
 
 #############################################################################

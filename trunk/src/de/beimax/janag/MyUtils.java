@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package de.beimax.utils;
+package de.beimax.janag;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -61,7 +61,7 @@ public class MyUtils {
 			read = System.in.read(buffer, 0, 80);
 			input = new String(buffer, 0, read-2);
 		}
-		catch(java.io.IOException e) { System.err.println(Messages.getString("MyUtils.InputError")); } //$NON-NLS-1$
+		catch(java.io.IOException e) { System.err.println(I18N.geti18nString(Messages.getString("MyUtils.InputError"))); } //$NON-NLS-1$
 
 		System.out.println();
 		return input;
@@ -85,13 +85,13 @@ public class MyUtils {
 			try {
 				userInput = br.readLine();
 			}
-			catch (IOException ioe) { System.out.println(Messages.getString("MyUtils.IOError")); } //$NON-NLS-1$
+			catch (IOException ioe) { System.out.println(I18N.geti18nString(Messages.getString("MyUtils.IOError"))); } //$NON-NLS-1$
 
 			try {
 				intInput = Integer.parseInt(userInput);
 				success = true;
 			}
-			catch(NumberFormatException e) { System.err.println(Messages.getString("MyUtils.NoInteger")); success = false; } //$NON-NLS-1$
+			catch(NumberFormatException e) { System.err.println(I18N.geti18nString(Messages.getString("MyUtils.NoInteger"))); success = false; } //$NON-NLS-1$
 		} while(success == false);
 
 		System.out.println();
@@ -116,7 +116,7 @@ public class MyUtils {
 				zahl = Double.parseDouble(input);
 				success = true;
 			}
-			catch(NumberFormatException e) { System.err.println(Messages.getString("MyUtils.NoFloat")); } //$NON-NLS-1$
+			catch(NumberFormatException e) { System.err.println(I18N.geti18nString(Messages.getString("MyUtils.NoFloat"))); } //$NON-NLS-1$
 		} while(success == false);
 
 		System.out.println();
