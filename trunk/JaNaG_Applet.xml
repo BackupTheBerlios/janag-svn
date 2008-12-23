@@ -9,6 +9,7 @@
         	<include name="readme.txt" />
 		</fileset>
     	
+    	<delete file="JaNaG_Applet.jar"/>
     	<copy todir="bin/de/beimax/janag">
         	<fileset refid="resources" />
     	</copy>
@@ -18,7 +19,11 @@
                 <attribute name="Main-Class" value="de.beimax.janag.NamegenApplet"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="bin"/>
+            <fileset dir="bin" >
+               	<exclude name="**/NamegenServer.class"/>
+               	<exclude name="**/NamegenCML.class"/>
+               	<exclude name="**/NamegenGUI*.class"/>
+        	</fileset>
         </jar>
     </target>
 </project>
