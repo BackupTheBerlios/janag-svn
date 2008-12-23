@@ -84,10 +84,10 @@ public class Namegenerator {
 		//open file
 		File file = new File(semanticsFile);
 		//check file existence
-		if(!file.exists()) {
-			System.err.println(Messages.getString("Namegenerator.FileDoesNotExist")); //$NON-NLS-1$
-			System.exit(0);
-		}
+		//if(!file.exists()) {
+		//	System.err.println(Messages.getString("Namegenerator.FileDoesNotExist")); //$NON-NLS-1$
+		//	System.exit(0);
+		//}
 
 		try { //read file by line
 			//either get the file as resource or as file stream
@@ -173,10 +173,10 @@ public class Namegenerator {
 		//open file
 		File file = new File(languageFile);
 		//check file existence
-		if(!file.exists()) {
-			System.err.println(Messages.getString("Namegenerator.FileDoesNotExist")); //$NON-NLS-1$
-			System.exit(0);
-		}
+		//if(!file.exists()) {
+		//	System.err.println(Messages.getString("Namegenerator.FileDoesNotExist")); //$NON-NLS-1$
+		//	System.exit(0);
+		//}
 
 		try { //read file by line
 			//either get the file as resource or as file stream
