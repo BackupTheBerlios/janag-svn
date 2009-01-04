@@ -123,7 +123,7 @@ public class NamegenGUI extends JFrame implements ActionListener, ItemListener {
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	@Override
+	//@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == butGenerate) {
 			int zahl = Integer.parseInt(chCount.getSelectedItem());
@@ -138,7 +138,7 @@ public class NamegenGUI extends JFrame implements ActionListener, ItemListener {
 	/* (non-Javadoc)
 	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
 	 */
-	@Override
+	//@Override
 	public void itemStateChanged(ItemEvent ie) {
 		if (ie.getSource() == chPattern) { //changed pattern
 			chGender.removeAll();
