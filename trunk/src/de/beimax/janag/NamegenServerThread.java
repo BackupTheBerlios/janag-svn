@@ -34,8 +34,7 @@ import java.io.StringReader;
 import java.net.Socket;
 
 /**
- * @author mkalus
- * Working thread of ng server
+ * @author mkalus Working thread of ng server
  */
 public class NamegenServerThread extends Thread {
 	/**
@@ -46,50 +45,55 @@ public class NamegenServerThread extends Thread {
 	/**
 	 * static reference to name generator - used by all threads
 	 */
-	private static Namegenerator ng = new Namegenerator("languages.txt", "semantics.txt");
-	
+	private static Namegenerator ng = new Namegenerator("languages.txt",
+			"semantics.txt");
+
 	/**
-	 * @param cs socket of worker
-	 * Constructor
+	 * @param cs
+	 *            socket of worker Constructor
 	 */
 	public NamegenServerThread(Socket cs) {
 		so = cs;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Thread#run()
 	 */
 	public void run() {
 		String command = "";
 
 		System.out.println(so.getInetAddress().getHostAddress() + ": Open.");
-		
+
 		try {
-			//Input stream from client
-			BufferedReader receive = new BufferedReader(
-					new InputStreamReader(so.getInputStream()));
-	
-			//Output stream to client
-			BufferedWriter send = new BufferedWriter(
-					new OutputStreamWriter(so.getOutputStream()));
-		
+			// Input stream from client
+			BufferedReader receive = new BufferedReader(new InputStreamReader(
+					so.getInputStream()));
+
+			// Output stream to client
+			BufferedWriter send = new BufferedWriter(new OutputStreamWriter(
+					so.getOutputStream()));
+
 			try {
 				command = receive.readLine();
-				System.out.println(so.getInetAddress().getHostAddress() + ": Command: " + command);
-				
-				//parse command
-				String[] echo = ParseCommand(command);
-				
+				System.out.println(so.getInetAddress().getHostAddress()
+						+ ": Command: " + command);
+
+				// parse command
+				String[] echo = parseCommand(command);
+
 				for (int i = 0; i < echo.length; i++) {
-					System.out.println(so.getInetAddress().getHostAddress() + ": Answer: " + echo[i]);
+					System.out.println(so.getInetAddress().getHostAddress()
+							+ ": Answer: " + echo[i]);
 					send.write(echo[i] + "\n");
 				}
 			} catch (Exception e) {
 				new PrintWriter(send).println("Error!");
 				System.err.println("Error in command: " + command);
 			}
-		send.flush();
-		so.close();
+			send.flush();
+			so.close();
 		} catch (IOException e) {
 			System.err.println("Socket-Error!");
 			return;
@@ -99,54 +103,121 @@ public class NamegenServerThread extends Thread {
 	}
 
 	/**
-	 * @param command http-command
-	 * @return list of randomly generated names
-	 * Parses command given to a thread
+	 * @param command
+	 *            http-command
+	 * @return list of randomly generated names or other information - or error
+	 *         Parses command given to a thread
 	 */
-	private String[] ParseCommand(String command) {
-		String pattern, gender;
-		int count, type;
-		String[] mynames = { I18N.geti18nString(Messages.getString("NamegenServerThread.GenericError")) }; //$NON-NLS-1$
-		
-		StringReader r = new StringReader(command);
-		StreamTokenizer st = new StreamTokenizer(r);
+	private String[] parseCommand(String command) {
+		// create tokenizer to parse command
+		StreamTokenizer st = new StreamTokenizer(new StringReader(command));
+
+		// get first command
 		try {
-			//First arguement has to be GET
-			type = st.nextToken();
-			if (type != StreamTokenizer.TT_WORD) throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg1"))); //$NON-NLS-1$
-			if (!st.sval.equals("GET")) throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg1"))); //$NON-NLS-2$
-			
-			//now pattern
-			st.nextToken();
-			if (st.sval == null || st.sval.equals("")) throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg2"))); //$NON-NLS-2$
-			pattern = st.sval;
-			
-			//now gender
-			st.nextToken();
-			if (st.sval == null || st.sval.equals("")) throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg3"))); //$NON-NLS-2$
-			gender = st.sval;
-			
-			//at last the number of arguements
-			type = st.nextToken();
-			if (type != StreamTokenizer.TT_NUMBER) throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg4"))); //$NON-NLS-1$
-			count = (int) st.nval;
+			// First arguement has to be GET, PATTERNS or GENDERS
+			int type = st.nextToken();
+			if (type != StreamTokenizer.TT_WORD)
+				throw new IOException(I18N.geti18nString(Messages
+						.getString("NamegenServerThread.Arg1"))); //$NON-NLS-1$
+			if (st.sval.equals("GET"))
+				return getRandomNames(st);
+			if (st.sval.equals("PATTERNS"))
+				return getPatterns(st);
+			if (st.sval.equals("GENDERS"))
+				return getGenders(st);
+			throw new IOException(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.GenericError")));
 		} catch (IOException e) {
-			System.err.println(I18N.geti18nString(Messages.getString("NamegenServerThread.CommandError"))); //$NON-NLS-1$
-			mynames[0] = I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorStart")) + e.getMessage() + I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorEnd")); //$NON-NLS-1$ //$NON-NLS-2$
-			return mynames;
+			System.err.println(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.CommandError"))); //$NON-NLS-1$
+			return new String[] { I18N.geti18nString(Messages
+					.getString("NamegenServerThread.CommandErrorStart")) + e.getMessage() + I18N.geti18nString(Messages.getString("NamegenServerThread.CommandErrorEnd")) }; //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+
+	/**
+	 * Handle stream for "GET" command
+	 * @param st
+	 * @return
+	 * @throws IOException
+	 */
+	private String[] getRandomNames(StreamTokenizer st) throws IOException {
+		// now pattern
+		st.nextToken();
+		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg2"))); //$NON-NLS-2$
+		String pattern = st.sval;
+
+		// now gender
+		st.nextToken();
+		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg3"))); //$NON-NLS-2$
+		String gender = st.sval;
+
+		// at last the number of arguements
+		int type = st.nextToken();
+		if (type != StreamTokenizer.TT_NUMBER)
+			throw new IOException(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.Arg4"))); //$NON-NLS-1$
+		int count = (int) st.nval;
 		
-		//ok, everything fine - now get names
+		//more?
+		if (st.nextToken() != StreamTokenizer.TT_EOF)
+			throw new IOException(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.GetError")));
+
+		// ok, everything fine - now get names
 		try {
-			//synchronize name generation
+			// synchronize name generation
 			synchronized (ng) {
-				mynames = ng.getRandomName(pattern, gender, count);
+				return ng.getRandomName(pattern, gender, count);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			mynames[0] = I18N.geti18nString(Messages.getString("NamegenServerThread.GeneratorError")); //$NON-NLS-1$
-			return mynames;
+			return new String[] { I18N.geti18nString(Messages
+					.getString("NamegenServerThread.GeneratorError")) }; //$NON-NLS-1$
 		}
-		return mynames;
+	}
+
+	/**
+	 * Handle stream for "PATTERNS" command
+	 * @param st
+	 * @return
+	 * @throws IOException
+	 */
+	private String[] getPatterns(StreamTokenizer st) throws IOException {
+		if (st.nextToken() != StreamTokenizer.TT_EOF)
+			throw new IOException(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.PatternsError")));
+
+		return ng.getPatterns();
+	}
+
+	/**
+	 * Handle stream for "GENDERS" command
+	 * @param st
+	 * @return
+	 * @throws IOException
+	 */
+	private String[] getGenders(StreamTokenizer st) throws IOException {
+		// now pattern
+		st.nextToken();
+		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg2"))); //$NON-NLS-2$
+		String pattern = st.sval;
+
+		//more?
+		if (st.nextToken() != StreamTokenizer.TT_EOF)
+			throw new IOException(I18N.geti18nString(Messages
+					.getString("NamegenServerThread.GendersError")));
+
+		// ok, everything fine - now get names
+		try {
+			// synchronize name generation
+			synchronized (ng) {
+				return ng.getGenders(pattern);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new String[] { I18N.geti18nString(Messages
+					.getString("NamegenServerThread.GeneratorError")) }; //$NON-NLS-1$
+		}
 	}
 }
