@@ -106,7 +106,7 @@ Goettin8:3:^FantasyMitte,FantasyEndungW,komma,^Godess|Goettin,space,GottZusatz,a
 ##Dämonen und ihre Beschreibung, Herkunft, aussehen, Fähigkeiten, u.ä.
 ##Sprachschablone für Dämonenwesen, u.ä.
 #############################################################################
-[Dämonen|Demons]
+[Demons|Dämonen]
 :Demon|Dämon
 Mann:5:^FantasyMitte,DämonEndungM
 EinzelnameM:5:^DämonEinzelnameM
