@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: NamegenCML.java
- * Package: de.beimax.janag
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
+
 package de.beimax.janag;
 
 import java.io.BufferedReader;
@@ -30,80 +28,27 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import de.beimax.janag.i18n.I18N;
+import de.beimax.janag.i18n.Messages;
+import de.beimax.janag.utils.IOHelper;
 
 /**
  * @author mkalus
- * NameGenerator command line
+ *
  */
 public class NamegenCML {
 	/**
 	 * Namegenerator instance
 	 */
-	private static Namegenerator ng;
-
-	
-	/**
-	 * @return number of pattern selected by user
-	 * Menu 1 - select pattern
-	 */
-	public static int menu1() {
-		String[] list = ng.getPatterns();
-
-		for (int i = 0; i < list.length; i++)
-			System.out.println((i+1) + ") " + list[i]);
-
-		int select = MyUtils.readInt(I18N.geti18nString(Messages.getString("CMLSelectPattern")));
-
-		if (select < 0 || select > list.length)
-			System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
-		else if (select > 0)
-			menu2(list[select-1]);
-
-		return select;
-	}
+	private static NameGenerator ng;
 
 	/**
-	 * @param pattern name of pattern to select from
-	 * Menu 2 - select gender
-	 */
-	public static void menu2(String pattern) {
-		String[] list = ng.getGenders(pattern);
-		int count;
-
-		for (int i = 0; i < list.length; i++)
-			System.out.println((i+1) + ") " + list[i]);
-
-		int select = MyUtils.readInt(I18N.geti18nString(Messages.getString("CMLSelectGender")));
-
-		if (select < 0 || select > list.length)
-			System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
-		if (select == 0) return;
-
-		//ok, now ask for the number of entries
-		do {
-			count = MyUtils.readInt(I18N.geti18nString(Messages.getString("CMLSelectNumberOfNames")));
-			if (count < 0)
-				System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
-		} while (count < 0);
-
-		if (count == 0) return;
-
-		//generate names and print them
-		String[] mynames = ng.getRandomName(pattern, list[select-1], count);
-
-		for (int i = 0; i < count; i++)
-			System.out.println(mynames[i]);
-
-		System.out.println();
-	}
-
-	/**
-	 * @param args arguments
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {//Interactive Mode
 			//output hint
-			ng = new Namegenerator("languages.txt", "semantics.txt");
+			ng = new NameGenerator("languages.txt", "semantics.txt");
 	
 			System.out.println(I18N.geti18nString(Messages.getString("CMLModeHint")));
 			
@@ -198,6 +143,61 @@ public class NamegenCML {
 	}
 
 	/**
+	 * @return number of pattern selected by user
+	 * Menu 1 - select pattern
+	 */
+	public static int menu1() {
+		String[] list = ng.getPatterns();
+
+		for (int i = 0; i < list.length; i++)
+			System.out.println((i+1) + ") " + list[i]);
+
+		int select = IOHelper.readInt(I18N.geti18nString(Messages.getString("CMLSelectPattern")));
+
+		if (select < 0 || select > list.length)
+			System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
+		else if (select > 0)
+			menu2(list[select-1]);
+
+		return select;
+	}
+
+	/**
+	 * @param pattern name of pattern to select from
+	 * Menu 2 - select gender
+	 */
+	public static void menu2(String pattern) {
+		String[] list = ng.getGenders(pattern);
+		int count;
+
+		for (int i = 0; i < list.length; i++)
+			System.out.println((i+1) + ") " + list[i]);
+
+		int select = IOHelper.readInt(I18N.geti18nString(Messages.getString("CMLSelectGender")));
+
+		if (select < 0 || select > list.length)
+			System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
+		if (select == 0) return;
+
+		//ok, now ask for the number of entries
+		do {
+			count = IOHelper.readInt(I18N.geti18nString(Messages.getString("CMLSelectNumberOfNames")));
+			if (count < 0)
+				System.out.println(I18N.geti18nString(Messages.getString("CMLCorrectNumber")));
+		} while (count < 0);
+
+		if (count == 0) return;
+
+		//generate names and print them
+		String[] mynames = ng.getRandomName(pattern, list[select-1], count);
+
+		for (int i = 0; i < count; i++)
+			System.out.println(mynames[i]);
+
+		System.out.println();
+	}
+
+	/**
 	 * @param command command given
 	 * @param lang language wanted
 	 * @param languagetxt file name of language file
@@ -227,7 +227,13 @@ public class NamegenCML {
 						new OutputStreamWriter(so.getOutputStream()));
 				
 				//send command to server
-				send.println("GET \"" + options[0] + "\" \"" + options[1] + "\" " + options[2]);
+				StringBuilder commandString = new StringBuilder("GET ");
+				commandString.append('"').append(options[0]).append('"');
+				commandString.append(' ').append('"').append(options[1]).append('"');
+				commandString.append(' ').append(options[2]);
+				if (lang.length() == 2)
+					commandString.append(' ').append('"').append(lang).append('"');
+				send.println(commandString.toString());
 				send.flush();
 				
 				//read answer...
@@ -239,14 +245,14 @@ public class NamegenCML {
 				
 				so.close();
 			} catch (IOException e) {
-				System.err.println("Konnte keine Verbindung zum Server aufbauen!");				
+				System.err.println(I18N.geti18nString(Messages.getString("CMLCouldNotConnect")));				
 			}
 			
 			return;
 		}
 
 		//Create new instance
-		ng = new Namegenerator(languagetxt, semanticstxt, lang);
+		ng = new NameGenerator(languagetxt, semanticstxt, lang);
 
 		if (command.equals("g")) {
 			//Generate names and print them

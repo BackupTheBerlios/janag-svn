@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: MyUtils.java
- * Package: de.beimax.utils
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,18 +18,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package de.beimax.janag;
+
+package de.beimax.janag.utils;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.io.InputStreamReader;
+
+import de.beimax.janag.i18n.I18N;
+import de.beimax.janag.i18n.Messages;
 
 /**
  * @author mkalus
- * Utility Class
+ *
+ * Input/Output helper class
  */
-public class MyUtils {
+public class IOHelper {
 	/**
 	 * @param prompt string
 	 * Prints a simple prompt string to stdout
@@ -144,20 +145,5 @@ public class MyUtils {
 
 		System.out.println();
 		return c;
-	}
-
-	/**
-	 * @param s string to be separated
-	 * @param sep separator string (used in StringTokenizer)
-	 * @return Array of separated strings
-	 */
-	public static String[] split(String s, String sep) {
-		StringTokenizer st = new StringTokenizer(s, sep);
-		int ntok = st.countTokens();
-		String[] res = new String[ntok];
-		for (int i = 0; i < ntok; i++) {
-			res[i] = st.nextToken();
-		}
-		return res;
 	}
 }

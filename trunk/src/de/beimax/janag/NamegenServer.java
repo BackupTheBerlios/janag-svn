@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: NamegenServer.java
- * Package: de.beimax.janag
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,32 +25,39 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * @author mkalus
- * Starter Class to start a Namegenerator server.
+ * @author mkalus Starter Class to start a Namegenerator server.
  */
 public class NamegenServer {
+	/**
+	 * static reference to name generator - used by all threads (through getInstance)
+	 */
+	private static NameGenerator ng = new NameGenerator("languages.txt",
+			"semantics.txt");
 
 	/**
-	 * @param args expects up to one arguement (socket number)
+	 * @param args
+	 *            expects up to one arguement (socket number)
 	 */
 	public static void main(String[] args) {
 		int port = 12022;
-		
-		//Ask command line
-		if (args.length == 1) {//Port als Argument
+
+		// Ask command line
+		if (args.length == 1) {// Port as argument
 			port = Integer.parseInt(args[0]);
 		} else if (args.length > 1) {
-			System.err.println("Too many arguements - only considering the first"); //$NON-NLS-1$
+			System.err
+					.println("Too many arguements - only considering the first"); //$NON-NLS-1$
 		}
 
 		try {
 			ServerSocket seso = new ServerSocket(port);
 			System.out.println("Starting server on port " + port + "..."); //$NON-NLS-1$
-			System.out.println("Expected request form: GET \"PATTERN\" \"GENDER\" COUNT"); //$NON-NLS-1$
-			
-			while(true) {
+			System.out
+					.println("Expected request form: GET \"PATTERN\" \"GENDER\" COUNT \"LANGUAGE\""); //$NON-NLS-1$
+
+			while (true) {
 				Socket so = seso.accept();
-				Thread worker = new NamegenServerThread(so);
+				Thread worker = new NamegenServerThread(so, ng.getInstance());
 				worker.start();
 			}
 		} catch (IOException e) {

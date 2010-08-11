@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: NamegenServerThread.java
- * Package: de.beimax.janag
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -32,28 +29,34 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.net.Socket;
+import java.util.Locale;
+
+import de.beimax.janag.i18n.I18N;
+import de.beimax.janag.i18n.Messages;
 
 /**
  * @author mkalus Working thread of ng server
  */
 public class NamegenServerThread extends Thread {
 	/**
+	 * Namegenerator instance of worker
+	 */
+	private NameGenerator ng;
+
+	/**
 	 * Socket of worker
 	 */
 	private Socket so;
 
 	/**
-	 * static reference to name generator - used by all threads
-	 */
-	private static Namegenerator ng = new Namegenerator("languages.txt",
-			"semantics.txt");
-
-	/**
 	 * @param cs
 	 *            socket of worker Constructor
+	 * @param ng
+	 *            name generator instance
 	 */
-	public NamegenServerThread(Socket cs) {
-		so = cs;
+	public NamegenServerThread(Socket cs, NameGenerator ng) {
+		this.so = cs;
+		this.ng = ng;
 	}
 
 	/*
@@ -95,10 +98,12 @@ public class NamegenServerThread extends Thread {
 			send.flush();
 			so.close();
 		} catch (IOException e) {
+			ng = null;
 			System.err.println("Socket-Error!");
 			return;
 		}
 
+		ng = null;
 		System.out.println(so.getInetAddress().getHostAddress() + ": Close.");
 	}
 
@@ -116,17 +121,16 @@ public class NamegenServerThread extends Thread {
 		try {
 			// First arguement has to be GET, PATTERNS or GENDERS
 			int type = st.nextToken();
-			if (type != StreamTokenizer.TT_WORD)
-				throw new IOException(I18N.geti18nString(Messages
-						.getString("NamegenServerThread.Arg1"))); //$NON-NLS-1$
+			if (type != StreamTokenizer.TT_WORD
+					|| st.sval.equalsIgnoreCase("HELP"))
+				return help(); // return help/usage
 			if (st.sval.equals("GET"))
 				return getRandomNames(st);
 			if (st.sval.equals("PATTERNS"))
 				return getPatterns(st);
 			if (st.sval.equals("GENDERS"))
 				return getGenders(st);
-			throw new IOException(I18N.geti18nString(Messages
-					.getString("NamegenServerThread.GenericError")));
+			return help(); // return help/usage
 		} catch (IOException e) {
 			System.err.println(I18N.geti18nString(Messages
 					.getString("NamegenServerThread.CommandError"))); //$NON-NLS-1$
@@ -136,7 +140,21 @@ public class NamegenServerThread extends Thread {
 	}
 
 	/**
+	 * returns help
+	 * 
+	 * @return
+	 */
+	private String[] help() {
+		return new String[] {
+				"Use the following commands to work with JaNaG:",
+				"GET \"PATTERN\" \"GENDER\" COUNT \"LANG\" retrieves a number of random names.",
+				"PATTERNS \"LANG\" returns a list of possible patterns in a certain language.",
+				"GENDERS \"PATTERN\" \"LANG\" returns a list of possible genders for a certain pattern." };
+	}
+
+	/**
 	 * Handle stream for "GET" command
+	 * 
 	 * @param st
 	 * @return
 	 * @throws IOException
@@ -144,80 +162,93 @@ public class NamegenServerThread extends Thread {
 	private String[] getRandomNames(StreamTokenizer st) throws IOException {
 		// now pattern
 		st.nextToken();
-		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg2"))); //$NON-NLS-2$
+		if (st.sval == null || st.sval.equals(""))throw new IOException("Argument 2 must be a pattern name enclosed by \""); //$NON-NLS-2$
 		String pattern = st.sval;
 
 		// now gender
 		st.nextToken();
-		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg3"))); //$NON-NLS-2$
+		if (st.sval == null || st.sval.equals(""))throw new IOException("Argument 3 must be a gender name enclosed by \""); //$NON-NLS-2$
 		String gender = st.sval;
 
 		// at last the number of arguements
 		int type = st.nextToken();
 		if (type != StreamTokenizer.TT_NUMBER)
-			throw new IOException(I18N.geti18nString(Messages
-					.getString("NamegenServerThread.Arg4"))); //$NON-NLS-1$
+			throw new IOException("Argument 4 must be an integer number"); //$NON-NLS-1$
 		int count = (int) st.nval;
-		
-		//more?
+
+		// get language
+		String lang = getLanguageFromTokenizer(st);
+
+		// more?
 		if (st.nextToken() != StreamTokenizer.TT_EOF)
-			throw new IOException(I18N.geti18nString(Messages
-					.getString("NamegenServerThread.GetError")));
+			throw new IOException("Expected request form: GET \"PATTERN\" \"GENDER\" COUNT \"LANGUAGE\"");
 
 		// ok, everything fine - now get names
 		try {
-			// synchronize name generation
-			synchronized (ng) {
-				return ng.getRandomName(pattern, gender, count);
-			}
+			return ng.getRandomName(pattern, gender, count, lang);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new String[] { I18N.geti18nString(Messages
-					.getString("NamegenServerThread.GeneratorError")) }; //$NON-NLS-1$
+			return new String[] { "###ERROR###" }; //$NON-NLS-1$
 		}
 	}
 
 	/**
 	 * Handle stream for "PATTERNS" command
+	 * 
 	 * @param st
 	 * @return
 	 * @throws IOException
 	 */
 	private String[] getPatterns(StreamTokenizer st) throws IOException {
-		if (st.nextToken() != StreamTokenizer.TT_EOF)
-			throw new IOException(I18N.geti18nString(Messages
-					.getString("NamegenServerThread.PatternsError")));
+		// get language
+		String lang = getLanguageFromTokenizer(st);
 
-		return ng.getPatterns();
+		if (st.nextToken() != StreamTokenizer.TT_EOF)
+			throw new IOException(
+					"PATTERNS takes exactly one (language) or no arguments (default language)!");
+
+		return ng.getPatterns(lang);
 	}
 
 	/**
 	 * Handle stream for "GENDERS" command
+	 * 
 	 * @param st
 	 * @return
 	 * @throws IOException
 	 */
 	private String[] getGenders(StreamTokenizer st) throws IOException {
-		// now pattern
+		// find pattern
 		st.nextToken();
-		if (st.sval == null || st.sval.equals(""))throw new IOException(I18N.geti18nString(Messages.getString("NamegenServerThread.Arg2"))); //$NON-NLS-2$
+		if (st.sval == null || st.sval.equals(""))throw new IOException("Argument 2 must be a pattern name enclosed by \""); //$NON-NLS-2$
 		String pattern = st.sval;
 
-		//more?
+		// also, get language
+		String lang = getLanguageFromTokenizer(st);
+
+		// more?
 		if (st.nextToken() != StreamTokenizer.TT_EOF)
-			throw new IOException(I18N.geti18nString(Messages
-					.getString("NamegenServerThread.GendersError")));
+			throw new IOException(
+					"GENDERS takes exactly two (pattern, language) or one arguments (pattern using default language)!");
 
 		// ok, everything fine - now get names
-		try {
-			// synchronize name generation
-			synchronized (ng) {
-				return ng.getGenders(pattern);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new String[] { I18N.geti18nString(Messages
-					.getString("NamegenServerThread.GeneratorError")) }; //$NON-NLS-1$
-		}
+		return ng.getGenders(pattern, lang);
+	}
+
+	/**
+	 * helper method to parse language string from tokenizer
+	 * 
+	 * @param st
+	 * @return
+	 * @throws IOException
+	 */
+	private String getLanguageFromTokenizer(StreamTokenizer st)
+			throws IOException {
+		st.nextToken();
+		// if not defined -> define default language of server...
+		if (st.sval == null || st.sval.equals(""))
+			return Locale.getDefault().getLanguage();
+		// else return language string
+		return st.sval;
 	}
 }

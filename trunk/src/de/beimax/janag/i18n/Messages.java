@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: NameGenderGroup.java
- * Package: de.beimax.janag
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,27 +18,31 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package de.beimax.janag;
+
+package de.beimax.janag.i18n;
+
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * @author mkalus
- * A group of name groups based on "gender" (e.g. male, female, city, ...)
+ * I18N-Message Class
  */
-public class NameGenderGroup extends List {
+public class Messages {
+	private static final String BUNDLE_NAME = "de.beimax.janag.messages"; //$NON-NLS-1$
 
-	/**
-	 * @param name
-	 */
-	public NameGenderGroup(String name) {
-		super(name);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
+			.getBundle(BUNDLE_NAME);
+
+	private Messages() {
 	}
 
-	/**
-	 * @param name
-	 * @param weight
-	 */
-	public NameGenderGroup(String name, int weight) {
-		super(name, weight);
+	public static String getString(String key) {
+		try {
+			return RESOURCE_BUNDLE.getString(key);
+		} catch (MissingResourceException e) {
+			return '!' + key + '!';
+		}
 	}
 
 }

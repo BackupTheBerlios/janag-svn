@@ -1,10 +1,7 @@
 /**
  * $Id$
- * File: NamedObject.java
- * Package: de.beimax.janag
- * Project: JaNaG
  *
- * Copyright (C) 2008 Maximilian Kalus.  All rights reserved.
+ * Copyright (C) 2008-2010 Maximilian Kalus.  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,38 +18,51 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package de.beimax.janag;
+
+package de.beimax.janag.lists;
+
+import java.util.LinkedList;
+import java.util.Random;
+
+import de.beimax.janag.entities.NamedEntity;
 
 /**
  * @author mkalus
- * Class is base class for named objects 
+ * 
+ * Lists with named entities
+ *
  */
-public class NamedObject {
+public class JaNaGList extends LinkedList<NamedEntity> {
 	/**
-	 * Name of object
+	 * 
 	 */
-	private String name;
+	private static final long serialVersionUID = -4503920656427382535L;
 
 	/**
-	 * Constructor
+	 * random number generator
+	 */
+	private static Random r = null;
+
+	/**
+	 * Add a string as a new name
+	 * 
 	 * @param name
+	 * @return
 	 */
-	public NamedObject(String name) {
-		setName(name);
+	public boolean add(String name) {
+		return add(new NamedEntity(name));
 	}
-
+	
 	/**
-	 * @return the name
+	 * 
+	 * @return random string
 	 */
-	public String getName() {
-		return name;
+	public String getRandom() {
+		// variable calculator variable
+		if (r == null) r = new Random();
+		int index = r.nextInt(size());
+		
+		//return node at index x
+		return get(index).getName();
 	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
 }
