@@ -1,4 +1,4 @@
-##Language cultures and Semantics
+##Language cultures and Semantics - actually Morphology, but Semantics is used due to historic reasons
 ##Sprachkulturen und Wortbildungsregeln
 
 ##A language pattern will be set by [...]
@@ -25,20 +25,20 @@
 ##^ bedeutet Großschreibung des erstens Zeichens
 ##TEILx = Teil des Names aus den Tabelle in languages.txt
 
-## Internationalisierung: Mann kann den Namen und TEILx pro Sprache durch | trennen
+## Internationalisierung: Man kann den Namen und TEILx pro Sprache durch | trennen
 
 #############################################################################
 ##Pseudo old German names like Karl, Kunibert, u.ä.
 ##Sprachschablone für Pseudo-Altdeutsche Namen wie Karl, Kunibert, u.ä.
 #############################################################################
 [Pseudo Old German|Pseudo-Altdeutsch]
-:Male|Mann
+:Male|männlich
 EinzelnameM:10:^AltdeutschEinzelnameM
 Einzelname+EndungM:10:^AltdeutschEinzelnameM,AltdeutschEndungM
 Anfang+EndeM:10:^AltdeutschAnfang,AltdeutschEndungM
 GottnameM:10:^AltdeutschGott,AltdeutschGottsuffixM
 
-:Female|Frau
+:Female|weiblich
 Anfang+EndeW:10:^AltdeutschAnfang,AltdeutschEndungW
 Maennlich+EndeW:10:^AltdeutschEndungM,AltdeutschEndungW
 GottnameW:10:^AltdeutschGott,AltdeutschEndungW
@@ -68,12 +68,12 @@ Region7:10:^AltdeutschStadtAnf,AltdeutschStadt
 ##Menschlich Fantasy
 #############################################################################
 [Human Fantasy|Menschlich Fantasy]
-:Male|Mann
+:Male|männlich
 Mann1:10:^FantasyAnfang,FantasyEndungM
 Mann2:10:^FantasyAnfang,FantasyMitte,FantasyEndungM
 Mann3:5:^FantasyMitte,FantasyEndungM
 
-:Female|Frau
+:Female|weiblich
 Frau1:10:^FantasyAnfang,FantasyEndungW
 Frau2:10:^FantasyAnfang,FantasyMitte,FantasyEndungW
 Frau3:5:^Vokal,FantasyEndungW
@@ -129,10 +129,10 @@ Einzelname+Endung:5:^DämonEinzelnameM,EndungWeiblich
 ##Griechisch
 #############################################################################
 [Greek|Griechisch]
-:Male|Mann
+:Male|männlich
 Grieche1:10:^Grieche
 
-:Female|Frau
+:Female|weiblich
 Griechin1:10:^Griechin
 
 #############################################################################
@@ -140,10 +140,10 @@ Griechin1:10:^Griechin
 ##Spanisch
 #############################################################################
 [Spanish|Spanisch]
-:Male|Mann
+:Male|männlich
 Spanier1:10:^Spanier
 
-:Female|Frau
+:Female|weiblich
 Spanierin1:10:^Spanierin
 
 #############################################################################
@@ -151,10 +151,10 @@ Spanierin1:10:^Spanierin
 ##Italienisch
 #############################################################################
 [Italian|Italienisch]
-:Male|Mann
+:Male|männlich
 Italiener1:10:^Italiener
 
-:Female|Frau
+:Female|weiblich
 Italienerin1:10:^Italienerin
 
 #############################################################################
@@ -162,10 +162,10 @@ Italienerin1:10:^Italienerin
 ##Irisch
 #############################################################################
 [Irish|Irisch]
-:Male|Mann
+:Male|männlich
 Ire1:10:^Ire
 
-:Female|Frau
+:Female|weiblich
 Irin1:10:^Irin
 
 #############################################################################
@@ -173,10 +173,10 @@ Irin1:10:^Irin
 ##Französisch
 #############################################################################
 [French|Französisch]
-:Male|Mann
+:Male|männlich
 Franzose1:10:^Franzose
 
-:Female|Frau
+:Female|weiblich
 Franzoesin1:10:^Franzoesin
 
 #############################################################################
@@ -184,10 +184,10 @@ Franzoesin1:10:^Franzoesin
 ##Polnisch
 #############################################################################
 [Polish|Polnisch]
-:Male|Mann
+:Male|männlich
 Pole1:10:^Pole
 
-:Female|Frau
+:Female|weiblich
 Polin1:10:^Polin
 
 #############################################################################
@@ -195,10 +195,10 @@ Polin1:10:^Polin
 ##Hebräisch
 #############################################################################
 [Hebrew|Hebräisch]
-:Male|Mann
+:Male|männlich
 HebraeischM1:10:^HebraeischM
 
-:Female|Frau
+:Female|weiblich
 HebraeischW1:10:^HebraeischW
 
 #############################################################################
