@@ -442,4 +442,24 @@ Femaletop500+:10:^fgn400,space,^psn400
 Femaletop500+:10:^fgn500,space,^psn500
 Femaletop500+:10:^fgn500+,space,^psn500+
 
+[Schwarzes Auge RPG|Schwarzes Auge]
+:Garethi male|Gerethi männlich
+GarethiMZ1:200:^GarethiZentralM,space,^GarethiNachnameEinfach
+GarethiMZ2:15:^GarethiZentralM,space,^GarethiNachnameEinfachM
+
+:Garethi female|Gerethi weiblich
+GarethiWZ1:200:^GarethiZentralW,space,^GarethiNachnameEinfach
+GarethiWZ2:15:^GarethiZentralW,space,^GarethiNachnameEinfachW
+
+:Garethi male noble|Gerethi männlich, adelig
+GethiNobleMale1:90:^MittelreichAdelA,MittelreichAdelME
+GethiNobleMale1:10:^BosparanischM
+
+:Garethi female noble|Gerethi weiblich, adelig
+GethiNobleFemale1:90:^MittelreichAdelA,MittelreichAdelWE
+GethiNobleFemale2:10:^BosparanischW
+
+:Mittelreich location|Mittelreich Ortsname
+Mittelreich:10:^MittelreichOrtV,MittelreichOrtN
+
 [End]
