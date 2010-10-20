@@ -21,13 +21,13 @@
 
 package de.beimax.janag;
 
-import java.applet.Applet;
+import javax.swing.JApplet;
 
 /**
  * @author mkalus
  *
  */
-public class NamegenApplet extends Applet {
+public class NamegenApplet extends JApplet {
 	private static final long serialVersionUID = -87858429809433277L;
 
 	/**
@@ -44,7 +44,7 @@ public class NamegenApplet extends Applet {
 			panel.setLang(mylang);
 		panel.init();
 		this.add(panel);
-		
+
 		this.resize(230,380);
 	}
 }
