@@ -110376,7 +110376,7 @@ Vilborg
 Ýrr
 [IcelandSurnames]
 Arnardottir
-FinnbogadÙ ttir
+Finnbogadottir
 Flosadottir
 Fridleifsdottir
 Gudmunsson
@@ -110384,7 +110384,7 @@ Hafthorsson
 Hauksson
 Helgarson
 Hermannsson
-JÙ nsson
+Jonsson
 Magnusson
 Sigurbjornsson
 Stefansson

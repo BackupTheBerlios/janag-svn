@@ -380,7 +380,7 @@ Femaletop500+:10:^fgn400,space,^psn400
 Femaletop500+:10:^fgn500,space,^psn500
 Femaletop500+:10:^fgn500+,space,^psn500+
 
-[Belgian-All]
+[Belgian-All|Belgisch]
 :Male
 Male:2:^FrenchMale,space,^BelgianFlamsSurnames
 Male:10:^FrenchMale,space,^BelgianWallonSurnames
@@ -398,7 +398,7 @@ Male:2:^NetherlandsMale,space,^BelgianWallonSurnames
 Male:10:^NetherlandsMale,space,^BelgianFlamsSurnames
 Male:10:^NetherlandsMale,space,^NetherlandsSurnames
 
-[Belgian-Wallon]
+[Belgian-Wallon|Belgisch-wallonisch]
 :Male
 Male:2:^FrenchMale,space,^BelgianFlamsSurnames
 Male:10:^FrenchMale,space,^BelgianWallonSurnames
@@ -406,13 +406,13 @@ Male:10:^FrenchMale,space,^FrenchSurnames
 Male:3:^BelgianWallonMale,space,^FrenchSurnames
 Male:3:^BelgianWallonMale,space,^BelgianWallonSurnames
 
-[Belgian-Flams]
+[Belgian-Flams|Belgisch-flämisch]
 :Male
 Male:10:^BelgianFlamsMale,space,^NetherlandsSurnames
 Male:10:^NetherlandsMale,space,^BelgianFlamsSurnames
 Male:10:^NetherlandsMale,space,^NetherlandsSurnames
 
-[Netherlands]
+[Netherlands|Niederländisch]
 :Male
 Male:10:^NetherlandsMale,space,^BelgianFlamsSurnames
 Male:70:^NetherlandsMale,space,^NetherlandsSurnames
@@ -420,24 +420,24 @@ Male:10:^BelgianFlamsMale,space,^NetherlandsSurnames
 Male:10:^BelgianFlamsMale,space,^BelgianFlamsSurnames
 
 [Estonian|Estonisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^EstonianMale,space,^EstonianSurnames
 :Female|Weiblich
 Female:10:^EstonianFemale,space,^EstonianSurnames
 
 [Latvian|Lettisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^LatvianMale,space,^LatvianSurnames
 :Female|Weiblich
 Female:10:^LatvianFemale,space,^LatvianSurnames
 
-[Lithuanian|Littauen]
-:Male|Maennlich
+[Lithuanian|Littauisch]
+:Male|männlich
 Male:10:^LithuanianMale,space,^LithuanianSurnames
 :Female|Weiblich
 Female:10:^LithuanianFemale,space,^LithuanianSurnames
 
-[German with Moslem/Turks]
+[German with Moslem/Turks|Deutsch mit Muslimen/Türken]
 :Male
 Male:80:^GermanMale,space,^GermanSurnames
 Male:10:^ArabianMale,space,^TurkeySurnames
@@ -448,45 +448,45 @@ Male:5:^ArabianMale,space,^TurkeySurnames
 Male:5:^TurkeyMale,space,^TurkeySurnames
 Female:50:^GermanFemale,space,^GermanSurnames
 
-[German wo Moslem/Turks]
+[German wo Moslem/Turks|Deutsch ohne Muslime/Türken]
 :Male
 Male:100:^GermanMale,space,^GermanSurnames
 :Both
 Male:50:^GermanMale,space,^GermanSurnames,return,^GermanCities
 Female:50:^GermanFemale,space,^GermanSurnames
 
-[Danish|Daenisch]
-:Male|Maennlich
+[Danish|Dänisch]
+:Male|männlich
 Male:10:^DanishMale,space,^DanishSurnames
 :Female|Weiblich
 Female:10:^DanishFemale,space,^DanishSurnames
 
 [Finnish|Finnisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^FinnishMale,space,^FinnishSurnames
 :Female|Weiblich
 Female:10:^FinnishFemale,space,^FinnishSurnames
 
 [Swedish|Schwedisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^SwedishMale,space,^SwedishSurnames
 :Female|Weiblich
 Female:10:^SwedishFemale,space,^SwedishSurnames
 
 [Norwegian|Norwegisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^NorwegianMale,space,^NorwegianSurnames
 :Female|Weiblich
 Female:10:^NorwegianFemale,space,^NorwegianSurnames
 
-[Iceland|Islaendisch]
-:Male|Maennlich
+[Iceland|Isländisch]
+:Male|männlich
 Male:10:^IcelandMale,space,^IcelandSurnames
 :Female|Weiblich
 Female:10:^IcelandFemale,space,^IcelandSurnames
 
 [Turkmenistan|Turkmenisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^ArabianMale,space,^RussianSurnames
 Male:10:^RussianMale,space,^RussianSurnames
 Male:2:^TurkmenistanMale,space,^TurkmenistanSurnames
@@ -500,14 +500,14 @@ Male:4:^UzbekistanMale,space,^TurkmenistanSurnames
 Female:10:^TurkmenistanFemale,space,^TurkmenistanSurnames
 
 [Uzbekistan|Usbekisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^UzbekistanMale,space,^UzbekistanSurnames
 Male:10:^ArabianMale,space,^UzbekistanSurnames
 :Female|Weiblich
 Female:10:^UzbekistanFemale,space,^UzbekistanSurnames
 
 [Kirghizstan|Kirgisisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^KirghizstanMale,space,^KirghizstanSurnames
 Male:10:^RussianMale,space,^KirghizstanSurnames
 Male:10:^RussianMale,space,^RussianSurnames
@@ -516,7 +516,7 @@ Male:10:^KirghizstanMale,space,^RussianSurnames
 Female:10:^KirghizstanFemale,space,^KirghizstanSurnames
 
 [Kazakhstan|Kasachsich]
-:Male|Maennlich
+:Male|männlich
 Male:10:^KazakhstanMale,space,^KazakhstanSurnames
 Male:10:^RussianMale,space,^RussianSurnames
 Male:10:^KazakhstanMale,space,^RussianSurnames
@@ -526,7 +526,7 @@ Male:2:^ArabianMale,space,^KazakhstanSurnames
 Female:10:^KazakhstanFemale,space,^KazakhstanSurnames
 
 [Ukrainian|Ukrainisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^UkrainianMale,space,^UkrainianSurnames
 Male:10:^RussianMale,space,^RussianSurnames
 Male:10:^UkrainianMale,space,^RussianSurnames
@@ -535,7 +535,7 @@ Male:10:^RussianMale,space,^UkrainianSurnames
 Female:10:^UkrainianFemale,space,^UkrainianSurnames
 
 [Moldavian|Moldawisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^MoldavianMale,space,^MoldavianSurnames
 Male:3:^MoldavianMale,space,^RussianSurnames
 Male:10:^RomanianMale,space,^MoldavianSurnames
@@ -548,14 +548,14 @@ Female:5:^RussianFemale,space,^MoldavianSurnames
 Female:1:^RussianFemale,space,^RussianSurnames
 
 [Georgian|Georgisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^GeorgianMale,space,^GeorgianSurnames
 Male:3:^RussianMale,space,^GeorgianSurnames
 :Female|Weiblich
 Female:10:^GeorgianFemale,space,^GeorgianSurnames
 
 [Caucasian|Kaukasisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^CaucasianMale,space,^RussianSurnames
 Male:10:^RussianMale,space,^RussianSurnames
 Male:10:^ArabianMale,space,^RussianSurnames
@@ -563,7 +563,7 @@ Male:10:^ArabianMale,space,^RussianSurnames
 Female:10:^CaucasianFemale,space,^CaucasianSurnames
 
 [Armenian|Armenisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^ArmenianMale,space,^ArmenianSurnames
 Male:5:^RussianMale,space,^ArmenianSurnames
 Male:1:^RussianMale,space,^RussianSurnames
@@ -571,65 +571,65 @@ Male:1:^RussianMale,space,^RussianSurnames
 Female:10:^ArmenianFemale,space,^ArmenianSurnames
 
 [Belarussian|Belarussisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^BelarussianMale,space,^BelarussianSurnames
 :Female|Weiblich
 Female:10:^BelarussianFemale,space,^BelarussianSurnames
 
 [Russian|Russisch]
-:Male|Maennlich
+:Male|männlich
 Male:96:^RussianMale,space,^RussianSurnames
 Male:8:^ArabianMale,space,^TurkmenistanSurnames
 Male:2:^ArabianMale,space,^RussianSurnames
 :Female|Weiblich
 Female:10:^RussianFemale,space,^RussianSurnames
 
-[Romanian|Rumaenisch]
-:Male|Maennlich
+[Romanian|Rumänisch]
+:Male|männlich
 Male:10:^RomanianMale,space,^RomanianSurnames
 
 [Albanian|Albanisch]
-:Male|Maennlich
+:Male|männlich
 Male:90:^AlbanianMale,space,^AlbanianSurnames
 Male:10:^ArabianMale,space,^AlbanianSurnames
 Male:1:^RomanianMale,space,^RomanianSurnames
 
 [Bulgarian|Bulgarisch]
-:Male|Maennlich
+:Male|männlich
 Male:2:^BulgarianMale,space,^BulgarianSurnames
 Male:2:^RussianMale,space,^BulgarianSurnames
 
-[Egyptian|Aegyptisch]
-:Male|Maennlich
+[Egyptian|Ägyptisch]
+:Male|männlich
 Male:10:^EgyptianMale,space,^EgyptianSurnames
 Male:10:^ArabianMale,space,^EgyptianSurnames
 Male:10:^EgyptianMale,space,^ArabianSurnames
 
 [Marrocan|Marrokanisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^MarrocanMale,space,^MarrocanSurnames
 Male:10:^ArabianMale,space,^MarrocanSurnames
 Male:10:^MarrocanMale,space,^ArabianSurnames
 
 [Algerian|Algerisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^AlgerianMale,space,^AlgerianSurnames
 Male:10:^ArabianMale,space,^AlgerianSurnames
 Male:10:^AlgerianMale,space,^ArabianSurnames
 
 
 [Iranian|Iranisch]
-:Male|Maennlich
+:Male|männlich
 Male:75:^IranianMale,space,^IranianSurnames
 Male:25:^ArabianMale,space,^IranianSurnames
 
-[Turkey|Tuerkisch]
-:Male|Maennlich
+[Turkey|Türkisch]
+:Male|männlich
 Male:10:^TurkeyMale,space,^TurkeySurnames
 Male:10:^ArabianMale,space,^TurkeySurnames
 
 [Afghanian|Afghanisch]
-:Male|Maennlich
+:Male|männlich
 Male:10:^AfghanianMale,space,^AfghanianSurnames
 Male:10:^ArabianMale,space,^AfghanianSurnames
 Male:8:^PakistanianMale,space,^AfghanianSurnames
@@ -637,13 +637,13 @@ Male:5:^PakistanianMale,space,^PakistanianSurnames
 Male:5:^ArabianMale,space,^PakistanianSurnames
 
 [Pakistani|Pakistanisch]
-:Male|Maennlich
+:Male|männlich
 Male:48:^PakistanianMale,space,^PakistanianSurnames
 Male:48:^ArabianMale,space,^PakistanianSurnames
 Male:4:^HinduMale,space,^HinduSurnames
 
 [Indian (Hindi)|Indisch]
-:Male|Maennlich
+:Male|männlich
 Male:2:^HinduMale,space,^PakistanianSurnames
 Male:10:^HinduMale,space,^HinduSurnames
 Male:10:^HinduMale,space,^SikhSurnames
